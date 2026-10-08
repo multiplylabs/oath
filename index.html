@@ -66,10 +66,40 @@
 
   <section id="method">
     <h2>Method</h2>
-    <figure class="fig narrow">
-      <img src="assets/img/teaser.jpg" width="1320" height="1806" alt="A training set of household objects feeds one reinforcement learning policy that converts a kinematic trajectory into a dynamic one in 6.5 seconds, then grasps held-out objects on a real arm and hand.">
-      <figcaption>One policy, trained once, turns a kinematic trajectory into a dynamic one.</figcaption>
-    </figure>
+    <div class="stages portrait" data-stages>
+      <div class="stage-figure">
+        <img src="assets/img/teaser.jpg" width="1320" height="1806" alt="A training set of household objects feeds one reinforcement learning policy that converts a kinematic trajectory into a dynamic one in 6.5 seconds, then grasps held-out objects on a real arm and hand.">
+        <button type="button" class="hot t1" data-stage="1" aria-label="Training dataset"></button>
+        <button type="button" class="hot t2" data-stage="2" aria-label="Unified policy"></button>
+        <button type="button" class="hot t3" data-stage="3" aria-label="Unseen objects"></button>
+        <button type="button" class="hot t4" data-stage="4" aria-label="Hardware deployment"></button>
+      </div>
+      <aside class="stage-panel" aria-live="polite">
+        <div class="stage-text" data-stage="0">
+          <span class="num">Overview</span>
+          <p>OATH trains a generalist object-agnostic controller for dexterous grasping using the DexYCB dataset.</p>
+          <p class="hint">Hover over a part of the figure to see more.</p>
+        </div>
+        <div class="stage-text" data-stage="1" hidden>
+          <span class="num">Training data</span>
+          <p>We use 340 trajectories from the DexYCB&nbsp;<a class="cite" href="#ref-7">[7]</a> dataset to demonstrate dexterous grasping of diverse object shapes. After TOPP is applied to the dataset, the average trajectory length is 5.82 seconds.</p>
+        </div>
+        <div class="stage-text" data-stage="2" hidden>
+          <span class="num">One unified policy</span>
+          <p>Rather than relying on computationally expensive per-clip sampling-based optimization, our policy executes physics-based retargeting in seconds by amortizing dynamic feasibility into offline reinforcement learning.</p>
+          <p>On average the kinematic retargeting pipeline takes 4 seconds across DexYCB clips, and policy rollout takes another 2.3 seconds, leading to a total retargeting time of &sim;6.5&nbsp;s per clip.</p>
+        </div>
+        <div class="stage-text" data-stage="3" hidden>
+          <span class="num">Unseen objects</span>
+          <p>We hold out 20 percent of object types as completely unseen by training: the mustard bottle, mug, bowl, and power drill.</p>
+          <p>Evaluation on entirely held-out objects from the dataset demonstrates zero-shot tracking and retargeting in real time using a Wuji Hand.</p>
+        </div>
+        <div class="stage-text" data-stage="4" hidden>
+          <span class="num">Open loop on hardware</span>
+          <p>To evaluate the dynamic plausibility of our retargeted motions on physical systems, we execute the synthesized trajectories open-loop on the hardware system. However, when compounding drift remains bounded, the generated trajectories successfully coordinate multi-fingered manipulation directly on hardware.</p>
+        </div>
+      </aside>
+    </div>
     <div class="stages" data-stages>
       <div class="stage-figure">
         <img src="assets/img/method.jpg" width="2000" height="1189" loading="lazy" alt="Reference generation in five stages: MANO trajectory, TopoRetarget, contact extraction, inverse kinematics and TOPP.">
@@ -171,6 +201,7 @@
       <li id="ref-4"><span>[4]</span>X. Zhu et al., <i>Learning dexterous manipulation using contact wrench guidance from human demonstration</i>, <a href="https://arxiv.org/abs/2607.00033">arXiv:2607.00033</a>, 2026.</li>
       <li id="ref-5"><span>[5]</span>J. Wu et al., <i>TopoRetarget: Interaction-preserving retargeting for dexterous manipulation</i>, <a href="https://arxiv.org/abs/2606.16272">arXiv:2606.16272</a>, 2026.</li>
       <li id="ref-6"><span>[6]</span>H. Pham and Q.-C. Pham, <i>A new approach to time-optimal path parameterization based on reachability analysis</i>, IEEE T-RO, vol. 34, no. 3, pp. 645&ndash;659, 2018.</li>
+      <li id="ref-7"><span>[7]</span>Y.-W. Chao et al., <i>DexYCB: A benchmark for capturing hand grasping of objects</i>, CVPR, 2021.</li>
     </ol>
   </section>
 

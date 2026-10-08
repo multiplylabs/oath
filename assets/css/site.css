@@ -63,20 +63,27 @@ h2+h3{margin-top:0}
 
 /* the reference-generation figure: each stage is a hover target that fills the side panel */
 .stages{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:28px;align-items:center;margin:0 auto 48px}
-.stage-figure{position:relative}
+.stage-figure{position:relative;overflow:hidden}
 .stage-figure img{width:100%;height:auto;background:#fff;border:1px solid var(--keyline)}
-.hot{position:absolute;padding:0;border:2px solid transparent;background:transparent;cursor:pointer;transition:border-color .15s,background .15s}
-.hot:hover,.hot:focus-visible,.hot.on{border-color:var(--accent);background:var(--wash);outline:none}
+.hot{position:absolute;padding:0;border:2px solid transparent;background:transparent;cursor:pointer;transition:border-color .15s,box-shadow .2s}
+/* the active region stays bright while the rest of the figure dims */
+.hot:hover,.hot:focus-visible,.hot.on{border-color:var(--accent);box-shadow:0 0 0 2000px rgba(25,24,22,.38);outline:none;z-index:1}
 .s1{left:1%;top:1%;width:31%;height:35%}
 .s2{left:38%;top:1%;width:34%;height:35%}
 .s3{left:77%;top:1%;width:22%;height:35%}
 .s4{left:51%;top:42%;width:37%;height:56%}
 .s5{left:4.5%;top:42%;width:40.5%;height:56%}
+.stages.portrait{grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:900px}
+.t1{left:14%;top:.3%;width:71%;height:20.2%}
+.t2{left:.5%;top:21.5%;width:98.5%;height:40.5%}
+.t3{left:4.5%;top:87.5%;width:38.5%;height:8.7%}
+.t4{left:50%;top:72%;width:45.5%;height:26.5%}
 .stage-panel{border-left:3px solid var(--accent);padding:4px 0 4px 20px;min-height:13em;align-self:center}
 .stage-text{display:grid;gap:10px}
 .stage-text[hidden]{display:none}
 .stage-text .num{font:700 11px/14px var(--font);text-transform:uppercase;letter-spacing:var(--track);color:var(--muted)}
 .stage-text p{font-size:15px;line-height:1.55}
+.stage-text .hint{color:var(--muted)}
 
 /* video grids */
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 20px}
@@ -121,7 +128,7 @@ footer .wordmark{font-size:18px;letter-spacing:var(--track);color:var(--paper)}
   main section{padding:64px 18px}
   h2{font-size:30px;margin-bottom:28px}
   .grid{grid-template-columns:1fr}
-  .stages{grid-template-columns:1fr;gap:18px}
+  .stages,.stages.portrait{grid-template-columns:1fr;gap:18px}
   .stats b{font-size:38px}
   .prose{text-align:left}
 }
