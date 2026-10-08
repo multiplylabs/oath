@@ -10,6 +10,15 @@ Plain HTML and CSS, no build step: `index.html`, `assets/css/site.css`, `assets/
 python3 -m http.server 8000   # then open http://localhost:8000
 ```
 
+## Sending it as one file
+
+```sh
+python3 tools/bundle.py      # writes oath-website.html (about 40 MB, videos embedded)
+```
+
+The result opens with a double-click, with no server and no repo needed. It is too large for most email
+attachments; share it through Slack or Google Drive.
+
 ## Publishing
 
 The repository is private and GitHub Pages is not enabled yet. To publish:
