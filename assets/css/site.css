@@ -65,8 +65,8 @@ h2+h3{margin-top:0}
 .stages{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:28px;align-items:center;margin:0 auto 48px}
 .stage-figure{position:relative;overflow:hidden}
 .stage-figure img{width:100%;height:auto;background:#fff;border:1px solid var(--keyline)}
-/* hover targets: a faint dashed outline and a numbered badge show what can be explored */
-.hot{position:absolute;padding:0;border:1.5px dashed rgba(182,62,18,.55);border-radius:10px;background:transparent;cursor:pointer;
+/* hover targets: a numbered badge shows what can be explored; the outline appears only while active */
+.hot{position:absolute;padding:0;border:2px solid transparent;border-radius:10px;background:transparent;cursor:pointer;
   transition:border-color .15s,box-shadow .2s}
 .hot::after{content:attr(data-stage);position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
   background:var(--accent);color:#fff;font:700 11px/1 var(--font);box-shadow:0 0 0 2px rgba(255,255,255,.85);transition:opacity .15s}
