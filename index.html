@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#191816">
+<title>OATH: Object-Agnostic Tracking for Dexterous Hands</title>
+<meta name="description" content="OATH is one residual policy that turns kinematic hand-object references into dynamically feasible dexterous grasps on objects it has never seen, 2.4x faster than real time.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OATH: Object-Agnostic Tracking for Dexterous Hands, Enabling Rapid Physics-based Retargeting">
+<meta property="og:description" content="One residual policy that retargets human demonstrations into dynamically feasible dexterous grasps on unseen objects, faster than real time.">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23B63E12'/%3E%3Ctext x='16' y='23' font-family='Arial,sans-serif' font-size='20' font-weight='900' fill='%23fff' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="assets/js/site.js" defer></script>
+</head>
+<body>
+
+<header class="hero">
+  <video class="hero-bg" src="assets/video/hero_loop.mp4" poster="assets/video/hero_loop.jpg" autoplay muted loop playsinline aria-hidden="true"></video>
+  <div class="hero-inner">
+    <div class="wordmark">OATH</div>
+    <h1><span class="initial">O</span>bject-<span class="initial">A</span>gnostic <span class="initial">T</span>racking for Dexterous <span class="initial">H</span>ands,<br>Enabling Rapid Physics-based Retargeting</h1>
+    <p class="authors">
+      <span>Solvin Sigurdson<sup>1,2</sup></span>
+      <span>Prasanna Sriganesh<sup>2,3</sup></span>
+      <span>Juan Borbon<sup>2</sup></span>
+      <span>Joel Burdick<sup>1</sup></span>
+      <span>Dingqi Zhang<sup>2</sup></span>
+      <span>Jiuguang Wang<sup>2</sup></span>
+    </p>
+    <p class="affils">
+      <span><sup>1</sup>California Institute of Technology</span>
+      <span><sup>2</sup>Multiply Labs</span>
+      <span><sup>3</sup>Carnegie Mellon University</span>
+    </p>
+    <nav class="links">
+      <span class="btn soon">Paper</span>
+      <a class="btn" href="#overview">Video</a>
+      <span class="btn soon">Code</span>
+    </nav>
+  </div>
+  <a class="cue" href="#overview" aria-label="Scroll to the overview video"></a>
+</header>
+
+<main>
+
+  <section id="overview">
+    <h2>Overview</h2>
+    <video class="player" src="assets/video/overview.mp4" poster="assets/video/overview.jpg" controls playsinline preload="metadata"></video>
+  </section>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p class="prose">Retargeting human demonstrations into dynamically feasible dexterous hand trajectories requires resolving complex contact physics, yet current methods either omit physical constraints or rely on computationally expensive sampling-based optimization. We reframe physics-based retargeting as residual learning, and show that zero-shot generalization across objects comes from the observation space: a localized contact-error signal that guides each robot link to its target on the object surface lets a single residual policy grasp novel object geometries. Rolling this policy out in simulation on a kinematic reference yields a physics-based retargeter, OATH, that runs 2.4&times; faster than real time.</p>
+    <div class="stats">
+      <div><b>2.4&times;</b><span>faster than real time</span></div>
+      <div><b>54%</b><span>of unseen-object trajectories</span></div>
+      <div><b>1</b><span>policy for every object</span></div>
+    </div>
+  </section>
+
+  <section id="method">
+    <h2>Method</h2>
+    <figure class="fig narrow">
+      <img src="assets/img/teaser.jpg" width="1320" height="1806" alt="A training set of household objects feeds one reinforcement learning policy that converts a kinematic trajectory into a dynamic one in 6.5 seconds, then grasps held-out objects on a real arm and hand.">
+      <figcaption>One policy, trained once, turns a kinematic trajectory into a dynamic one.</figcaption>
+    </figure>
+    <figure class="fig">
+      <img src="assets/img/method.jpg" width="2000" height="1189" loading="lazy" alt="Reference generation in five stages: MANO trajectory, TopoRetarget, contact extraction, inverse kinematics and TOPP.">
+      <figcaption>Human video &rarr; MANO &rarr; robot hand &rarr; contacts &rarr; arm IK &rarr; safe timing.</figcaption>
+    </figure>
+    <h3>The key: contact-error observations</h3>
+    <figure class="fig">
+      <img src="assets/img/contact.jpg" width="1800" height="816" loading="lazy" alt="Reference contact points on the object and the finger, and the contact error vector between them during training.">
+      <figcaption>Each link sees the error to its contact target, never the object geometry.</figcaption>
+    </figure>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+
+    <h3>Simulation</h3>
+    <div class="grid">
+      <figure><video src="assets/video/sim_mug.mp4" poster="assets/video/sim_mug.jpg" muted loop playsinline preload="metadata" data-autoplay></video><figcaption>Mug <span>unseen object</span></figcaption></figure>
+      <figure><video src="assets/video/sim_bowl.mp4" poster="assets/video/sim_bowl.jpg" muted loop playsinline preload="metadata" data-autoplay></video><figcaption>Bowl <span>unseen object</span></figcaption></figure>
+      <figure><video src="assets/video/sim_pitcher.mp4" poster="assets/video/sim_pitcher.jpg" muted loop playsinline preload="metadata" data-autoplay></video><figcaption>Pitcher <span>held-out trajectory</span></figcaption></figure>
+      <figure><video src="assets/video/sim_banana.mp4" poster="assets/video/sim_banana.jpg" muted loop playsinline preload="metadata" data-autoplay></video><figcaption>Banana <span>held-out trajectory</span></figcaption></figure>
+    </div>
+
+    <h3>Against the baselines</h3>
+    <div class="table">
+      <table>
+        <thead>
+          <tr><th rowspan="2"></th><th class="grp" colspan="4">Baselines</th><th class="grp ours" colspan="3">OATH</th></tr>
+          <tr><th>SPIDER <a class="cite" href="#ref-1">[1]</a></th><th>DAID <a class="cite" href="#ref-2">[2]</a></th><th>ReGrind <a class="cite" href="#ref-3">[3]</a></th><th>CHORD <a class="cite" href="#ref-4">[4]</a></th><th class="ours">Train</th><th class="ours">Test</th><th class="ours">Unseen</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="dir">&uarr;</span>Success (%)</td><td>22.0</td><td class="best">100</td><td>5.4</td><td>2.0</td><td class="ours">90</td><td class="ours">58</td><td class="ours">54</td></tr>
+          <tr><td><span class="dir">&darr;</span>Tracking error (mm)</td><td>29.9</td><td>20.4</td><td>43.2</td><td class="best">7.9</td><td class="ours">11.7</td><td class="ours">15.3</td><td class="ours">13.8</td></tr>
+          <tr><td><span class="dir">&darr;</span>Compute per second</td><td>25.2</td><td>138</td><td>0.93</td><td>0.88</td><td class="ours best" colspan="3">0.40</td></tr>
+          <tr><td><span class="dir">&darr;</span>Compute per success</td><td>124</td><td>138</td><td>15.8</td><td>64.9</td><td class="ours best">0.46</td><td class="ours best">0.69</td><td class="ours best">0.71</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Compute in seconds per second of reference, normalised to an RTX&nbsp;5080. Bold is best in each row.</p>
+
+    <h3>Hardware, open loop</h3>
+    <div class="grid">
+      <figure><video src="assets/video/hw_crackers.mp4" poster="assets/video/hw_crackers.jpg" muted loop playsinline preload="metadata" data-autoplay></video><i class="speed">1.0&times;</i><figcaption>Cracker box <span>held-out trajectory</span></figcaption></figure>
+      <figure><video src="assets/video/hw_mug.mp4" poster="assets/video/hw_mug.jpg" muted loop playsinline preload="metadata" data-autoplay></video><i class="speed">1.0&times;</i><figcaption>Mug <span>unseen object</span></figcaption></figure>
+      <figure><video src="assets/video/hw_soup.mp4" poster="assets/video/hw_soup.jpg" muted loop playsinline preload="metadata" data-autoplay></video><i class="speed">1.0&times;</i><figcaption>Soup can <span>held-out trajectory</span></figcaption></figure>
+      <figure><video src="assets/video/hw_meat.mp4" poster="assets/video/hw_meat.jpg" muted loop playsinline preload="metadata" data-autoplay></video><i class="speed">1.0&times;</i><figcaption>Potted meat can <span>held-out trajectory</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <div class="bib">
+      <button type="button" class="copy" data-copy="bib-text">Copy</button>
+<pre id="bib-text">@article{sigurdson2026oath,
+  title   = {{OATH}: Object-Agnostic Tracking for Dexterous Hands,
+             Enabling Rapid Physics-based Retargeting},
+  author  = {Sigurdson, Solvin and Sriganesh, Prasanna and Borbon, Juan and
+             Burdick, Joel and Zhang, Dingqi and Wang, Jiuguang},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+    </div>
+    <ol class="refs">
+      <li id="ref-1"><span>[1]</span>C. Pan et al., <i>SPIDER: Scalable physics-informed dexterous retargeting</i>, 2026.</li>
+      <li id="ref-2"><span>[2]</span>B. Paliwal et al., <i>Do as I do: Dexterous manipulation data from everyday human videos</i>, <a href="https://arxiv.org/abs/2606.19333">arXiv:2606.19333</a>, 2026.</li>
+      <li id="ref-3"><span>[3]</span>Y. Feng et al., <i>A minimalist retargeting-guided reinforcement learning recipe for dexterous manipulation</i>, <a href="https://arxiv.org/abs/2607.11874">arXiv:2607.11874</a>, 2026.</li>
+      <li id="ref-4"><span>[4]</span>X. Zhu et al., <i>Learning dexterous manipulation using contact wrench guidance from human demonstration</i>, <a href="https://arxiv.org/abs/2607.00033">arXiv:2607.00033</a>, 2026.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <span class="wordmark">OATH</span>
+  <span>Caltech &middot; Multiply Labs &middot; Carnegie Mellon University</span>
+</footer>
+
+</body>
+</html>
