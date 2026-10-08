@@ -65,12 +65,18 @@ h2+h3{margin-top:0}
 .stages{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,3fr);gap:28px;align-items:center;margin:0 auto 48px}
 .stage-figure{position:relative;overflow:hidden}
 .stage-figure img{width:100%;height:auto;background:#fff;border:1px solid var(--keyline)}
-.hot{position:absolute;padding:0;border:2px solid transparent;background:transparent;cursor:pointer;transition:border-color .15s,box-shadow .2s}
+/* hover targets: a faint dashed outline and a numbered badge show what can be explored */
+.hot{position:absolute;padding:0;border:1.5px dashed rgba(182,62,18,.55);border-radius:10px;background:transparent;cursor:pointer;
+  transition:border-color .15s,box-shadow .2s}
+.hot::after{content:attr(data-stage);position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  background:var(--accent);color:#fff;font:700 11px/1 var(--font);box-shadow:0 0 0 2px rgba(255,255,255,.85);transition:opacity .15s}
 /* the active region stays bright while the rest of the figure dims */
-.hot:hover,.hot:focus-visible,.hot.on{border-color:var(--accent);box-shadow:0 0 0 2000px rgba(25,24,22,.38);outline:none;z-index:1}
+.hot:hover,.hot:focus-visible,.hot.on{border:2px solid var(--accent);box-shadow:0 0 0 2000px rgba(25,24,22,.38);outline:none;z-index:1}
+.stage-figure:has(.hot.on) .hot:not(.on)::after{opacity:.35}
 .s1{left:1%;top:1%;width:31%;height:35%}
 .s2{left:38%;top:1%;width:34%;height:35%}
 .s3{left:77%;top:1%;width:22%;height:35%}
+.s3::after{top:auto;bottom:6px} /* its title runs to the top-right corner */
 .s4{left:51%;top:42%;width:37%;height:56%}
 .s5{left:4.5%;top:42%;width:40.5%;height:56%}
 .stages.portrait{grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:900px}

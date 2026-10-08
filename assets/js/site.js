@@ -18,7 +18,12 @@
     };
     for (const h of hots) {
       for (const ev of ["mouseenter", "focus", "click"]) h.addEventListener(ev, () => show(h.dataset.stage));
+      for (const ev of ["mouseleave", "blur"]) h.addEventListener(ev, () => show("0"));
     }
+    // On touch screens there is no mouseleave: a tap anywhere outside the targets resets the panel.
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".hot")) show("0");
+    });
   }
 
   for (const b of document.querySelectorAll("button[data-copy]")) {
