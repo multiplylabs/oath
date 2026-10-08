@@ -138,10 +138,36 @@
       </aside>
     </div>
     <h3>The key: contact-error observations</h3>
-    <figure class="fig">
-      <img src="assets/img/contact.jpg" width="1800" height="816" loading="lazy" alt="Reference contact points on the object and the finger, and the contact error vector between them during training.">
-      <figcaption>Each link sees the error to its contact target, never the object geometry.</figcaption>
-    </figure>
+    <div class="stages" data-stages>
+      <div class="stage-figure">
+        <img src="assets/img/contact.jpg" width="1800" height="816" loading="lazy" alt="Reference contact points on the object and the finger, and the contact error vector between them during training.">
+        <button type="button" class="hot c1" data-stage="1" aria-label="Reference contacts"></button>
+        <button type="button" class="hot c2" data-stage="2" aria-label="Policy training"></button>
+        <button type="button" class="hot c3" data-stage="3" aria-label="Contact error vector"></button>
+      </div>
+      <aside class="stage-panel" aria-live="polite">
+        <div class="stage-text" data-stage="0">
+          <span class="num">Contact error</span>
+          <p>Each link sees the error to its contact target, never the object geometry.</p>
+          <p class="hint">Hover over a panel, or the error vectors, to see more.</p>
+        </div>
+        <div class="stage-text" data-stage="1" hidden>
+          <span class="num">Reference</span>
+          <p>Reference contact points <b class="bar">g</b><sub>k,i</sub>, <b class="bar">h</b><sub>k,i</sub> are extracted from the kinematic trajectory.</p>
+          <p>The witness points are stored in the object frame (<b class="bar">g</b><sub>k,i</sub>) and the body frame (<b class="bar">h</b><sub>k,i</sub>), along with an active-slot Boolean <span class="bar">m</span><sub>k,i</sub>&nbsp;&isin;&nbsp;{0,&nbsp;1}.</p>
+        </div>
+        <div class="stage-text" data-stage="2" hidden>
+          <span class="num">Policy training</span>
+          <p>During policy training, the deviation between the reference contact points <b>e</b><sub>k,i</sub>(<b>q</b><sub>k</sub>) is computed and passed to the network as an observation.</p>
+          <p>This is important since the kinematic reference most strongly implies existence of a control input to track the reference if the current and reference contact states match.</p>
+        </div>
+        <div class="stage-text" data-stage="3" hidden>
+          <span class="num">The contact error vector</span>
+          <p>A key insight for our policy is to pass the vector <b>e</b><sub>k,i</sub>: the current vector between contact locations from the reference. This term is a function of the current state, and serves as an error signal to guide bodies back into alignment with the reference signal contacts.</p>
+          <p class="eq"><b>e</b><sub>k,i</sub> = [<b>p</b><sub>k,o</sub> + <b>R</b><sub>k,o</sub>&thinsp;<b class="bar">g</b><sub>k,i</sub>] &minus; [<b>p</b><sub>k,i</sub> + <b>R</b><sub>k,i</sub>&thinsp;<b class="bar">h</b><sub>k,i</sub>]</p>
+        </div>
+      </aside>
+    </div>
   </section>
 
   <section id="results">

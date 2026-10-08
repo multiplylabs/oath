@@ -75,6 +75,11 @@ h2+h3{margin-top:0}
 .s5{left:4.5%;top:42%;width:40.5%;height:56%}
 .stages.portrait{grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:900px}
 .t1{left:14%;top:.3%;width:71%;height:20.2%}
+.c1{left:.5%;top:2%;width:46.5%;height:95%}
+.c2{left:48.5%;top:2%;width:50.5%;height:95%}
+.c3{left:68%;top:24%;width:12.5%;height:50%;z-index:2!important}
+.bar{text-decoration:overline}
+.stage-text .eq{font-family:"Times New Roman",Times,serif;font-size:16px;text-align:center;padding:10px 8px;background:var(--paper-2);white-space:nowrap;overflow-x:auto}
 .t2{left:.5%;top:21.5%;width:98.5%;height:40.5%}
 .t3{left:4.5%;top:87.5%;width:38.5%;height:8.7%}
 .t4{left:50%;top:72%;width:45.5%;height:26.5%}
