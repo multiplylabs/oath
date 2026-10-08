@@ -9,6 +9,18 @@
   );
   if (!reduceMotion) for (const v of document.querySelectorAll("video[data-autoplay]")) onScreen.observe(v);
 
+  // Reference-generation figure: hovering, focusing or tapping a stage shows its description.
+  for (const box of document.querySelectorAll("[data-stages]")) {
+    const hots = box.querySelectorAll(".hot");
+    const show = (n) => {
+      for (const t of box.querySelectorAll(".stage-text")) t.hidden = t.dataset.stage !== n;
+      for (const h of hots) h.classList.toggle("on", h.dataset.stage === n);
+    };
+    for (const h of hots) {
+      for (const ev of ["mouseenter", "focus", "click"]) h.addEventListener(ev, () => show(h.dataset.stage));
+    }
+  }
+
   for (const b of document.querySelectorAll("button[data-copy]")) {
     b.addEventListener("click", async () => {
       try {

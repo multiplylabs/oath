@@ -56,7 +56,7 @@
 
   <section id="abstract">
     <h2>Abstract</h2>
-    <p class="prose">Retargeting human demonstrations into dynamically feasible dexterous hand trajectories requires resolving complex contact physics, yet current methods either omit physical constraints or rely on computationally expensive sampling-based optimization. We reframe physics-based retargeting as residual learning, and show that zero-shot generalization across objects comes from the observation space: a localized contact-error signal that guides each robot link to its target on the object surface lets a single residual policy grasp novel object geometries. Rolling this policy out in simulation on a kinematic reference yields a physics-based retargeter, OATH, that runs 2.4&times; faster than real time.</p>
+    <p class="prose">Retargeting human demonstrations into dynamically feasible dexterous hand trajectories requires resolving complex contact physics, yet current methods either omit physical constraints or rely on computationally expensive sampling-based optimization in simulation. Reinforcement learning has previously been used to achieve planning and control through contact dynamics; however, standard policies require object-specific training and fail to generalize across arbitrary geometries. This work reframes physics-based retargeting as a residual learning problem, where we demonstrate that zero-shot generalization across objects relies on structured state representations. Specifically, formulating the observation space to include a localized contact-error signal guiding each robot link to its target coordinate on the object surface enables a single, unified residual policy to successfully grasp novel, unseen object geometries. Rolling out this policy in simulation on a kinematic reference trajectory yields a physics-based retargeter, OATH. Operating at 0.4 seconds of compute per second of reference, OATH achieves 2.4&times; faster-than-real-time performance and a 60&ndash;350&times; reduction in computational cost compared to sampling-based methods. The system recovers 58% of held-out and 54% of unseen-object DexYCB trajectories while maintaining a sub-2&nbsp;cm tracking error.</p>
     <div class="stats">
       <div><b>2.4&times;</b><span>faster than real time</span></div>
       <div><b>54%</b><span>of unseen-object trajectories</span></div>
@@ -70,10 +70,43 @@
       <img src="assets/img/teaser.jpg" width="1320" height="1806" alt="A training set of household objects feeds one reinforcement learning policy that converts a kinematic trajectory into a dynamic one in 6.5 seconds, then grasps held-out objects on a real arm and hand.">
       <figcaption>One policy, trained once, turns a kinematic trajectory into a dynamic one.</figcaption>
     </figure>
-    <figure class="fig">
-      <img src="assets/img/method.jpg" width="2000" height="1189" loading="lazy" alt="Reference generation in five stages: MANO trajectory, TopoRetarget, contact extraction, inverse kinematics and TOPP.">
-      <figcaption>Human video &rarr; MANO &rarr; robot hand &rarr; contacts &rarr; arm IK &rarr; safe timing.</figcaption>
-    </figure>
+    <div class="stages" data-stages>
+      <div class="stage-figure">
+        <img src="assets/img/method.jpg" width="2000" height="1189" loading="lazy" alt="Reference generation in five stages: MANO trajectory, TopoRetarget, contact extraction, inverse kinematics and TOPP.">
+        <button type="button" class="hot s1" data-stage="1" aria-label="MANO trajectory"></button>
+        <button type="button" class="hot s2" data-stage="2" aria-label="TopoRetarget"></button>
+        <button type="button" class="hot s3" data-stage="3" aria-label="Contact extraction"></button>
+        <button type="button" class="hot s4" data-stage="4" aria-label="Inverse kinematics"></button>
+        <button type="button" class="hot s5" data-stage="5" aria-label="TOPP"></button>
+      </div>
+      <aside class="stage-panel" aria-live="polite">
+        <div class="stage-text" data-stage="0">
+          <span class="num">Reference generation</span>
+          <p>Hover over a stage to see what it does.</p>
+        </div>
+        <div class="stage-text" data-stage="1" hidden>
+          <span class="num">1 &middot; MANO trajectory</span>
+          <p>MANO meshes are fit overtop of a kinematic trajectory extracted from video or given by the DexYCB dataset.</p>
+          <p>Human demonstration videos provide high-level kinematic guidance, but direct joint-space mapping alters contact locations due to morphological disparities between human and robot end-effectors.</p>
+        </div>
+        <div class="stage-text" data-stage="2" hidden>
+          <span class="num">2 &middot; TopoRetarget</span>
+          <p>Morphological discrepancies between human MANO meshes and the target robotic hand prevent direct joint mapping. We utilize TopoRetarget&nbsp;<a class="cite" href="#ref-5">[5]</a> to map human mesh surface interactions onto the robot hand mesh while maintaining functional contact topology.</p>
+        </div>
+        <div class="stage-text" data-stage="3" hidden>
+          <span class="num">3 &middot; Contact extraction</span>
+          <p>Formulating contact-error signals for policy training requires reference contact locations and contact presence labels. Contacts are recorded for the 16 hand bodies with collidable geometry.</p>
+        </div>
+        <div class="stage-text" data-stage="4" hidden>
+          <span class="num">4 &middot; Inverse kinematics</span>
+          <p>Continuous tracking of target wrist poses requires coordinated motion across an arm-hand system. We apply differential inverse kinematics over the arm kinematic chain to align the arm with the wrist.</p>
+        </div>
+        <div class="stage-text" data-stage="5" hidden>
+          <span class="num">5 &middot; TOPP</span>
+          <p>Kinematic retargeting and IK produce trajectories that may violate physical motor limits. We apply Time-Optimal Path Parameterization (TOPP)&nbsp;<a class="cite" href="#ref-6">[6]</a> to adjust trajectory timing subject to joint velocity, acceleration, and torque constraints.</p>
+        </div>
+      </aside>
+    </div>
     <h3>The key: contact-error observations</h3>
     <figure class="fig">
       <img src="assets/img/contact.jpg" width="1800" height="816" loading="lazy" alt="Reference contact points on the object and the finger, and the contact error vector between them during training.">
@@ -136,6 +169,8 @@
       <li id="ref-2"><span>[2]</span>B. Paliwal et al., <i>Do as I do: Dexterous manipulation data from everyday human videos</i>, <a href="https://arxiv.org/abs/2606.19333">arXiv:2606.19333</a>, 2026.</li>
       <li id="ref-3"><span>[3]</span>Y. Feng et al., <i>A minimalist retargeting-guided reinforcement learning recipe for dexterous manipulation</i>, <a href="https://arxiv.org/abs/2607.11874">arXiv:2607.11874</a>, 2026.</li>
       <li id="ref-4"><span>[4]</span>X. Zhu et al., <i>Learning dexterous manipulation using contact wrench guidance from human demonstration</i>, <a href="https://arxiv.org/abs/2607.00033">arXiv:2607.00033</a>, 2026.</li>
+      <li id="ref-5"><span>[5]</span>J. Wu et al., <i>TopoRetarget: Interaction-preserving retargeting for dexterous manipulation</i>, <a href="https://arxiv.org/abs/2606.16272">arXiv:2606.16272</a>, 2026.</li>
+      <li id="ref-6"><span>[6]</span>H. Pham and Q.-C. Pham, <i>A new approach to time-optimal path parameterization based on reachability analysis</i>, IEEE T-RO, vol. 34, no. 3, pp. 645&ndash;659, 2018.</li>
     </ol>
   </section>
 
