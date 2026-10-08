@@ -76,7 +76,8 @@ h2+h3{margin-top:0}
 .s1{left:1%;top:1%;width:31%;height:35%}
 .s2{left:38%;top:1%;width:34%;height:35%}
 .s3{left:77%;top:1%;width:22%;height:35%}
-.s3::after{top:auto;bottom:6px} /* its title runs to the top-right corner */
+/* the pipeline figure: every stage title sits at the top, so its badges go bottom-left */
+.s1::after,.s2::after,.s3::after,.s4::after,.s5::after{top:auto;right:auto;bottom:6px;left:6px}
 .s4{left:51%;top:42%;width:37%;height:56%}
 .s5{left:4.5%;top:42%;width:40.5%;height:56%}
 .stages.portrait{grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-width:900px}
