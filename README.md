@@ -18,7 +18,7 @@ The repository is private and GitHub Pages is not enabled yet. To publish:
 2. Settings → Pages → Source: **GitHub Actions**.
 3. Run the **Deploy site** workflow (Actions tab), or switch its trigger to `push` so every push to `main` deploys.
 
-The page is then served at `https://ssigurdson.github.io/oath/`. For a custom domain, add a `CNAME` file containing the domain and point a DNS `CNAME` record at `ssigurdson.github.io`.
+The page is then served at `https://ssigurdson.github.io/oath-website/`. For a custom domain, add a `CNAME` file containing the domain and point a DNS `CNAME` record at `ssigurdson.github.io`.
 
 ## Videos
 
