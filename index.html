@@ -58,7 +58,7 @@
     <h2>Abstract</h2>
     <p class="prose">Retargeting human demonstrations into dynamically feasible dexterous hand trajectories requires resolving complex contact physics, yet current methods either omit physical constraints or rely on computationally expensive sampling-based optimization in simulation. Reinforcement learning has previously been used to achieve planning and control through contact dynamics; however, standard policies require object-specific training and fail to generalize across arbitrary geometries. This work reframes physics-based retargeting as a residual learning problem, where we demonstrate that zero-shot generalization across objects relies on structured state representations. Specifically, formulating the observation space to include a localized contact-error signal guiding each robot link to its target coordinate on the object surface enables a single, unified residual policy to successfully grasp novel, unseen object geometries. Rolling out this policy in simulation on a kinematic reference trajectory yields a physics-based retargeter, OATH. Operating at 0.4 seconds of compute per second of reference, OATH achieves 2.4&times; faster-than-real-time performance and a 60&ndash;350&times; reduction in computational cost compared to sampling-based methods. The system recovers 58% of held-out and 54% of unseen-object DexYCB trajectories while maintaining a sub-2&nbsp;cm tracking error.</p>
     <div class="stats">
-      <div><b>2.4&times;</b><span>faster than real time</span></div>
+      <div><b><small>up to</small>350&times;</b><span>less compute than sampling-based retargeting</span></div>
       <div><b>54%</b><span>of unseen-object trajectories</span></div>
       <div><b>1</b><span>policy for every object</span></div>
     </div>
@@ -70,14 +70,16 @@
       <div class="stage-figure">
         <img src="assets/img/teaser.jpg" width="1320" height="1806" alt="A training set of household objects feeds one reinforcement learning policy that converts a kinematic trajectory into a dynamic one in 6.5 seconds, then grasps held-out objects on a real arm and hand.">
         <button type="button" class="hot t1" data-stage="1" aria-label="Training dataset"></button>
-        <button type="button" class="hot t2" data-stage="2" aria-label="Unified policy"></button>
-        <button type="button" class="hot t3" data-stage="3" aria-label="Unseen objects"></button>
-        <button type="button" class="hot t4" data-stage="4" aria-label="Hardware deployment"></button>
+        <button type="button" class="hot t2" data-stage="2" aria-label="Kinematic trajectory"></button>
+        <button type="button" class="hot t3" data-stage="3" aria-label="Unified policy"></button>
+        <button type="button" class="hot t4" data-stage="4" aria-label="Dynamic trajectory"></button>
+        <button type="button" class="hot t5" data-stage="5" aria-label="Unseen objects"></button>
+        <button type="button" class="hot t6" data-stage="6" aria-label="Hardware deployment"></button>
       </div>
       <aside class="stage-panel" aria-live="polite">
         <div class="stage-text" data-stage="0">
           <span class="num">Overview</span>
-          <p>OATH trains a generalist object-agnostic controller for dexterous grasping using the DexYCB dataset.</p>
+          <p>OATH trains a generalist <b>object-agnostic</b> controller for dexterous grasping using the DexYCB dataset.</p>
           <p class="hint">Hover over a part of the figure to see more.</p>
         </div>
         <div class="stage-text" data-stage="1" hidden>
@@ -85,21 +87,31 @@
           <p>We use 340 trajectories from the DexYCB&nbsp;<a class="cite" href="#ref-7">[7]</a> dataset to demonstrate dexterous grasping of diverse object shapes. After TOPP is applied to the dataset, the average trajectory length is 5.82 seconds.</p>
         </div>
         <div class="stage-text" data-stage="2" hidden>
+          <span class="num">Kinematic trajectory</span>
+          <p>To transform raw human demonstrations into joint reference trajectories, the pipeline executes surface retargeting, kinematic alignment, and trajectory parameterization across four sequential steps.</p>
+          <p><a class="jump" href="#reference-pipeline">See how it is built &darr;</a></p>
+        </div>
+        <div class="stage-text" data-stage="3" hidden>
           <span class="num">One unified policy</span>
           <p>Rather than relying on computationally expensive per-clip sampling-based optimization, our policy executes physics-based retargeting in seconds by amortizing dynamic feasibility into offline reinforcement learning.</p>
           <p>On average the kinematic retargeting pipeline takes 4 seconds across DexYCB clips, and policy rollout takes another 2.3 seconds, leading to a total retargeting time of &sim;6.5&nbsp;s per clip.</p>
         </div>
-        <div class="stage-text" data-stage="3" hidden>
+        <div class="stage-text" data-stage="4" hidden>
+          <span class="num">Dynamic trajectory</span>
+          <p>Rolling out this policy in simulation on a kinematic reference trajectory yields a physics-based retargeter, OATH.</p>
+        </div>
+        <div class="stage-text" data-stage="5" hidden>
           <span class="num">Unseen objects</span>
           <p>We hold out 20 percent of object types as completely unseen by training: the mustard bottle, mug, bowl, and power drill.</p>
           <p>Evaluation on entirely held-out objects from the dataset demonstrates zero-shot tracking and retargeting in real time using a Wuji Hand.</p>
         </div>
-        <div class="stage-text" data-stage="4" hidden>
+        <div class="stage-text" data-stage="6" hidden>
           <span class="num">Open loop on hardware</span>
           <p>To evaluate the dynamic plausibility of our retargeted motions on physical systems, we execute the synthesized trajectories open-loop on the hardware system. However, when compounding drift remains bounded, the generated trajectories successfully coordinate multi-fingered manipulation directly on hardware.</p>
         </div>
       </aside>
     </div>
+    <h3 id="reference-pipeline">Where the kinematic trajectory comes from</h3>
     <div class="stages" data-stages>
       <div class="stage-figure">
         <img src="assets/img/method.jpg" width="2000" height="1189" loading="lazy" alt="Reference generation in five stages: MANO trajectory, TopoRetarget, contact extraction, inverse kinematics and TOPP.">
@@ -108,6 +120,7 @@
         <button type="button" class="hot s3" data-stage="3" aria-label="Contact extraction"></button>
         <button type="button" class="hot s4" data-stage="4" aria-label="Inverse kinematics"></button>
         <button type="button" class="hot s5" data-stage="5" aria-label="TOPP"></button>
+        <span class="sym sym-s3"><i class="bar">m</i><sub>k,i</sub> &middot; <b class="bar">g</b><sub>k,i</sub> &middot; <b class="bar">h</b><sub>k,i</sub></span>
       </div>
       <aside class="stage-panel" aria-live="polite">
         <div class="stage-text" data-stage="0">
@@ -137,13 +150,23 @@
         </div>
       </aside>
     </div>
+    <p class="fig-out">The output of the retargeting pipeline is <b>r</b><sub>k</sub>, containing the robot and object states <b class="bar">q</b><span class="ss"><sup>robot</sup><sub>k</sub></span> and <b class="bar">q</b><span class="ss"><sup>obj</sup><sub>k</sub></span>, contact presence <i class="bar">m</i><sub>k,i</sub>, and contact locations in the object and robot body frames <b class="bar">g</b><sub>k,i</sub>, <b class="bar">h</b><sub>k,i</sub>.</p>
     <h3>The key: contact-error observations</h3>
+    <div class="obs" data-obs>
+      <div class="obs-row"><span class="obs-label">Reference terms <b>r</b><sub>k</sub></span><div class="chips"><button type="button" class="chip" data-desc="object pose over a horizon"><b class="bar">q</b><span class="ss"><sup>obj</sup><sub>k:k+H/s</sub></span></button><button type="button" class="chip" data-desc="robot joint angles over a horizon"><b class="bar">q</b><span class="ss"><sup>robot</sup><sub>k:k+H/s</sub></span></button><button type="button" class="chip" data-desc="wrist pose over a horizon"><b class="bar">q</b><span class="ss"><sup>wrist</sup><sub>k:k+H/s</sub></span></button><button type="button" class="chip" data-desc="contact presence for each robot body"><i class="bar">m</i><sub>k,i</sub></button><button type="button" class="chip" data-desc="contact locations on the object and on robot body i, in their respective body frames"><b class="bar">g</b><sub>k,i</sub>, <b class="bar">h</b><sub>k,i</sub></button></div></div>
+      <div class="obs-row"><span class="obs-label">Observation terms <b>o</b><sub>k</sub></span><div class="chips"><button type="button" class="chip" data-desc="current robot and object state"><b>q</b><sub>k</sub></button><button type="button" class="chip" data-desc="current wrist state"><b class="">q</b><span class="ss"><sup>wrist</sup><sub>k</sub></span></button><button type="button" class="chip" data-desc="robot joint velocities"><b class="">q&#775;</b><span class="ss"><sup>robot</sup><sub>k</sub></span></button><button type="button" class="chip" data-desc="previous residual action">&delta;<sub>k&minus;1</sub></button><button type="button" class="chip key" data-desc="contact error vector for each robot body &mdash; the key observation, shown up close below"><b>e</b><sub>k,i</sub></button></div></div>
+      <div class="obs-row never"><span class="obs-label">Never observed</span><div class="chips"><button type="button" class="chip struck" data-desc="The policy never receives the object&rsquo;s mesh, its shape, its category, or a per-object parameter.">object mesh &middot; shape &middot; category</button></div></div>
+      <p class="obs-desc" data-default="Everything the policy receives. Hover a term for its meaning.">Everything the policy receives. Hover a term for its meaning.</p>
+      <p class="obs-zoom">&darr;&ensp;The contact error <b>e</b><sub>k,i</sub>, up close</p>
+    </div>
     <div class="stages" data-stages>
       <div class="stage-figure">
         <img src="assets/img/contact.jpg" width="1800" height="816" loading="lazy" alt="Reference contact points on the object and the finger, and the contact error vector between them during training.">
         <button type="button" class="hot c1" data-stage="1" aria-label="Reference contacts"></button>
         <button type="button" class="hot c2" data-stage="2" aria-label="Policy training"></button>
         <button type="button" class="hot c3" data-stage="3" aria-label="Contact error vector"></button>
+        <span class="sym g sym-c1g"><b class="bar">g</b><sub>k,i</sub></span><span class="sym h sym-c1h"><b class="bar">h</b><sub>k,i</sub></span>
+        <span class="sym g sym-c2g"><b class="bar">g</b><sub>k,i</sub></span><span class="sym h sym-c2h"><b class="bar">h</b><sub>k,i</sub></span>
       </div>
       <aside class="stage-panel" aria-live="polite">
         <div class="stage-text" data-stage="0">
