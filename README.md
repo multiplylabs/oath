@@ -10,6 +10,16 @@ Plain HTML and CSS, no build step: `index.html`, `assets/css/site.css`, `assets/
 python3 -m http.server 8000   # then open http://localhost:8000
 ```
 
+## Math
+
+Every symbol and equation is real TeX, typeset to inline SVG so it matches the paper and the page needs no math library.
+The source sits in each `<span class="m" data-tex="...">`; after editing one (or adding one, ending with `<!--/m-->`),
+re-typeset them all:
+
+```sh
+cd tools && npm install && node render-math.mjs
+```
+
 ## Sending it as one file
 
 ```sh

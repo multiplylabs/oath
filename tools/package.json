@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "description": "Renders the page's TeX to inline SVG (tools/render-math.mjs).",
+  "type": "module",
+  "dependencies": {
+    "mathjax-full": "^3.2.2"
+  }
+}
