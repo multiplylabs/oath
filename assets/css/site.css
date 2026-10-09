@@ -55,6 +55,7 @@ h2+h3{margin-top:0}
 .stats div+div{border-left:1px solid var(--line-soft)}
 .stats b{font:300 54px/1 var(--font);letter-spacing:-.03em}
 .stats b small{font-size:.3em;font-weight:400;letter-spacing:0;color:var(--muted);margin-right:.3em}
+.stats span em{font-style:normal;font-weight:900;color:var(--ink)} /* the label is already bold caps; emphasis steps up to black */
 .stats span{font:700 11px/14px var(--font);text-transform:uppercase;letter-spacing:var(--track);color:var(--muted)}
 
 .fig{display:grid;gap:14px;margin:0 auto 48px}
