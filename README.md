@@ -31,13 +31,13 @@ attachments; share it through Slack or Google Drive.
 
 ## Publishing
 
-The repository is private and GitHub Pages is not enabled yet. To publish:
+The repository is private and GitHub Pages is not enabled yet. Publishing needs an org admin, as for the other Multiply Labs project pages (e.g. `multiplylabs/brace`):
 
-1. Make the repository public (Settings → General → Danger Zone), or keep it private on a plan that allows private Pages.
+1. Make the repository public (Settings → General → Danger Zone); the org does not allow private Pages.
 2. Settings → Pages → Source: **GitHub Actions**.
 3. Run the **Deploy site** workflow (Actions tab), or switch its trigger to `push` so every push to `main` deploys.
 
-The page is then served at `https://ssigurdson.github.io/oath-website/`. For a custom domain, add a `CNAME` file containing the domain and point a DNS `CNAME` record at `ssigurdson.github.io`.
+The page is then served at `https://multiplylabs.github.io/oath/`. For a custom domain, add a `CNAME` file containing the domain and point a DNS `CNAME` record at `multiplylabs.github.io`.
 
 ## Videos
 
