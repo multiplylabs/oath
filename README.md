@@ -31,11 +31,7 @@ attachments; share it through Slack or Google Drive.
 
 ## Publishing
 
-The repository is private and GitHub Pages is not enabled yet. Publishing needs an org admin, as for the other Multiply Labs project pages (e.g. `multiplylabs/brace`):
-
-1. Make the repository public (Settings → General → Danger Zone); the org does not allow private Pages.
-2. Settings → Pages → Source: **GitHub Actions**.
-3. Run the **Deploy site** workflow (Actions tab), or switch its trigger to `push` so every push to `main` deploys.
+Every push to `main` runs the **Deploy site** workflow, which enables GitHub Pages on first run and publishes the site. The repository must be public first (Settings → General → Danger Zone); the org does not allow private Pages. The workflow can also be run by hand from the Actions tab.
 
 The page is then served at `https://multiplylabs.github.io/oath/`. For a custom domain, add a `CNAME` file containing the domain and point a DNS `CNAME` record at `multiplylabs.github.io`.
 
