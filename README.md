@@ -31,7 +31,7 @@ attachments; share it through Slack or Google Drive.
 
 ## Publishing
 
-Every push to `main` runs the **Deploy site** workflow, which enables GitHub Pages on first run and publishes the site. The repository must be public first (Settings → General → Danger Zone); the org does not allow private Pages. The workflow can also be run by hand from the Actions tab.
+Every push to `main` runs the **Deploy site** workflow, which publishes the site. One-time setup: the repository must be public (Settings → General → Danger Zone; the org does not allow private Pages) and Pages must be enabled with Settings → Pages → Source: **GitHub Actions**. The workflow can also be run by hand from the Actions tab.
 
 The page is then served at `https://multiplylabs.github.io/oath/`. For a custom domain, add a `CNAME` file containing the domain and point a DNS `CNAME` record at `multiplylabs.github.io`.
 
